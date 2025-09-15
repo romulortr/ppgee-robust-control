@@ -51,7 +51,7 @@ class PlanarRotor:
         g = self.g
         
         # System dynamics.
-        cos_theta, sin_theta = math.cos(x[2]), math.sin(x[2])
+        cos_theta, sin_theta = math.cos(x[2]), math.sin(x[2])   
         A = np.array([
             [0,0,0,1,0,0],
             [0,0,0,0,1,0],

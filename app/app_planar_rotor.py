@@ -15,7 +15,7 @@ def main():
         "gravity": 9.8
     }
     # Initial state.
-    x0 = np.array([0.05, -0.05, 0, 0, 0, 0])
+    x0 = np.array([0.5, -0.5, 0, 0, 0, 0])
 
     # Create plant and set its initial condition.
     plant = PlanarRotor(**plantParams)  
@@ -35,7 +35,6 @@ def main():
     K = control.solve(x0, **plantParams)
 
     for i, _ in enumerate(t, start=0):
-        print(i)
         u[:,i] = control.compute_input(x[:,i], K)
         x[:,i+1] = plant.iterate(u[:,i], sampling_time)
     

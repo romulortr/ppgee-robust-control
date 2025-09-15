@@ -71,5 +71,4 @@ class LQRControl:
             Gain matrix.
         """
         du = K@x.reshape([6,1])
-        print(du)
         return du.flatten() + self.uf
