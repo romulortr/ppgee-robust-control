@@ -52,15 +52,29 @@ class PlanarRotor:
         
         # System dynamics.
         cos_theta, sin_theta = math.cos(x[2]), math.sin(x[2])
-        dx = np.array([
-            x[3],
-            x[4],
-            x[5],
-            -(u[0]+u[1])/m*sin_theta,
-            (u[0]+u[1])/m*cos_theta - g,
-            d/(2*J)*(u[0]-u[1])
+        A = np.array([
+            [0,0,0,1,0,0],
+            [0,0,0,0,1,0],
+            [0,0,0,0,0,1],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
         ])
-        return dx
+        B = np.array([
+            [0,0],
+            [0,0],
+            [0,0],
+            [-sin_theta/m, -sin_theta/m],
+            [cos_theta/m, cos_theta/m],
+            [d/(2*J), -d/(2*J)]
+        ])
+        c = np.array([
+            0,0,0,0,-g,0
+        ]).reshape([6,1])
+        
+        dx = A@x.reshape([6,1]) + B@u.reshape([2,1]) + c        
+        
+        return dx.flatten()
 
     def iterate(self, u, dt):
         """
